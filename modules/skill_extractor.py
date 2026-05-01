@@ -16,10 +16,17 @@ INTEGRATION NOTES:
 import json
 import re
 from typing import List, Set, Dict, Optional
-import spacy
 
 # Import experience extractor for integration
 from modules.experience_extractor import ExperienceExtractor
+
+# Try to import spacy (optional)
+try:
+    import spacy
+    SPACY_AVAILABLE = True
+except ImportError:
+    SPACY_AVAILABLE = False
+    spacy = None
 
 
 class SkillExtractor:
@@ -46,12 +53,14 @@ class SkillExtractor:
         
         # Load spaCy model for NLP (optional)
         self.nlp = None
-        try:
-            import spacy
-            self.nlp = spacy.load('en_core_web_sm')
-        except Exception as e:
-            print(f"Warning: spaCy model not loaded ({e}). Using pattern matching only.")
-            self.nlp = None
+        if SPACY_AVAILABLE:
+            try:
+                self.nlp = spacy.load('en_core_web_sm')
+            except Exception as e:
+                print(f"Warning: spaCy model not loaded ({e}). Using pattern matching only.")
+                self.nlp = None
+        else:
+            print("Info: spaCy not installed. Using pattern matching only.")
     
     def _build_skill_list(self) -> Set[str]:
         """Build a comprehensive set of all skills"""
