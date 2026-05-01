@@ -14,15 +14,17 @@ class Config:
     UPLOAD_FOLDER = 'uploads'
     ALLOWED_EXTENSIONS = {'pdf', 'docx'}
     
-    # PostgreSQL Database settings
-    DB_HOST = os.environ.get('DB_HOST') or 'localhost'
-    DB_PORT = os.environ.get('DB_PORT') or '5432'
-    DB_NAME = os.environ.get('DB_NAME') or 'resume_analyzer'
-    DB_USER = os.environ.get('DB_USER') or 'postgres'
-    DB_PASSWORD = os.environ.get('DB_PASSWORD') or 'sapan211'
+    # Database settings - Use SQLite for PythonAnywhere compatibility
+    # For local PostgreSQL, set DATABASE_URL environment variable
+    DATABASE_URL = os.environ.get('DATABASE_URL')
     
-    # SQLAlchemy Database URI
-    SQLALCHEMY_DATABASE_URI = f'postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
+    if DATABASE_URL:
+        # Use PostgreSQL if DATABASE_URL is set (local development)
+        SQLALCHEMY_DATABASE_URI = DATABASE_URL
+    else:
+        # Use SQLite for PythonAnywhere and simple deployments
+        SQLALCHEMY_DATABASE_URI = 'sqlite:///resume_analyzer.db'
+    
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
     # OpenAI settings (optional)
