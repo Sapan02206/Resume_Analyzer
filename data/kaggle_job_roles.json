@@ -1,0 +1,65 @@
+{
+  "Executive/ Senior Executive- Trade Marketing, Hygiene Products": {
+    "description": "Trade Marketing Executive Brand Visibility, Sales Targets Field Marketing, Campaigns, Product Distribution Brand Head Excel, KPIs Tracking",
+    "required_skills": [
+      "Brand Promotion\nCampaign Management\nField Supervision\nMerchandising\npromotional activities\nTrade Marketing"
+    ],
+    "optional_skills": [],
+    "experience_level": "At least 3 years",
+    "education": "Master of Business Administration (MBA)"
+  },
+  "Business Development Executive": {
+    "description": "Apparel Sourcing Quality Garment Sourcing Reliable Partner Buyer/Vendor Communication",
+    "required_skills": [
+      "Fast typing skill\nIELTSInternet browsing & online work ability."
+    ],
+    "optional_skills": [],
+    "experience_level": "1 to 3 years",
+    "education": "Bachelor/Honors"
+  },
+  "Senior iOS Engineer": {
+    "description": "iOS Lifecycle Requirement Analysis Native Frameworks iOS Development API Integration Technical Communication UI Design Performance Optimization Feature Collaboration Bug Fixing Code Translation High-P",
+    "required_skills": [
+      "iOS\niOS App Developer\niOS Application Development\niOS Development\nMobile apps Developer (iOS)\nNative IOS\nSwift (iOS)\nSwift UI"
+    ],
+    "optional_skills": [],
+    "experience_level": "At least 4 years",
+    "education": "Bachelor of Science (BSc) in Computer Science"
+  },
+  "AI Engineer": {
+    "description": "Machine Learning Design Data Analysis Model Training AI Integration Innovation Cross-Functional Collaboration Model Deployment Documentation Analytical Skills Communication Team Collaboration",
+    "required_skills": [
+      "Python\nR or Java\nTensorFlow\nPyTorch\nScikit-learn."
+    ],
+    "optional_skills": [],
+    "experience_level": "Entry to Mid-level",
+    "education": "Bachelors or Masters degree in Computer Science, Engineering, or a related field."
+  },
+  "Mechanical Engineer": {
+    "description": "Machinery Maintenance Troubleshooting Report Preparation Log Maintenance",
+    "required_skills": [
+      "Maintenance  and Troubleshooting\nMechanical"
+    ],
+    "optional_skills": [],
+    "experience_level": "2 to 5 years",
+    "education": "Bachelor of Science (BSc) in Mechanical Engineering, Diploma in Mechanical"
+  },
+  "Mechanical Designer": {
+    "description": "Design Creation CAD Drawings Design Optimization Team Collaboration Compliance Assurance Design Reviews Manufacturing Support Documentation",
+    "required_skills": [
+      "AutoCAD\nSolidworks"
+    ],
+    "optional_skills": [],
+    "experience_level": "At least 5 years",
+    "education": "Bachelors degree in Mechanical Engineering from a reputed institute."
+  },
+  "Network Support Engineer": {
+    "description": "Mikrotik Router Configuration OLT Device Setup  Management Integration with Billing Software Network Monitoring Tools Integration Connectivity Troubleshooting Technical Support  Escalation Installatio",
+    "required_skills": [
+      "CCNA (Cisco Certified Network Associate)\nGPON\nHardware & Networking\nIIG\nISP\nIT Enabled services\nOLT and ONU"
+    ],
+    "optional_skills": [],
+    "experience_level": "At least 3 years",
+    "education": "Diploma, Bachelor/Honors"
+  }
+}

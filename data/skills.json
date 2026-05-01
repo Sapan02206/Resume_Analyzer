@@ -1,0 +1,63 @@
+{
+  "technical_skills": {
+    "programming_languages": [
+      "Python", "JavaScript", "Java", "C++", "C#", "Ruby", "Go", "Rust",
+      "TypeScript", "PHP", "Swift", "Kotlin", "Scala", "R", "MATLAB"
+    ],
+    "web_technologies": [
+      "HTML", "CSS", "React", "Angular", "Vue.js", "Node.js", "Express.js",
+      "Django", "Flask", "FastAPI", "Spring Boot", "ASP.NET", "jQuery",
+      "Bootstrap", "Tailwind CSS", "Next.js", "Nuxt.js", "Svelte"
+    ],
+    "databases": [
+      "MySQL", "PostgreSQL", "MongoDB", "Redis", "SQLite", "Oracle",
+      "SQL Server", "Cassandra", "DynamoDB", "Firebase", "Elasticsearch"
+    ],
+    "cloud_devops": [
+      "AWS", "Azure", "Google Cloud", "Docker", "Kubernetes", "Jenkins",
+      "GitLab CI", "GitHub Actions", "Terraform", "Ansible", "CircleCI"
+    ],
+    "data_science": [
+      "Machine Learning", "Deep Learning", "TensorFlow", "PyTorch", "Keras",
+      "Scikit-learn", "Pandas", "NumPy", "Matplotlib", "Seaborn", "NLP",
+      "Computer Vision", "Data Analysis", "Statistical Modeling"
+    ],
+    "mobile_development": [
+      "React Native", "Flutter", "iOS Development", "Android Development",
+      "Xamarin", "Ionic"
+    ],
+    "tools": [
+      "Git", "GitHub", "GitLab", "Bitbucket", "JIRA", "Confluence",
+      "Postman", "VS Code", "IntelliJ IDEA", "Eclipse"
+    ]
+  },
+  "soft_skills": [
+    "Communication", "Leadership", "Team Collaboration", "Problem Solving",
+    "Critical Thinking", "Time Management", "Adaptability", "Creativity",
+    "Project Management", "Agile", "Scrum", "Mentoring"
+  ],
+  "skill_variations": {
+    "JavaScript": ["JS", "Javascript", "ECMAScript", "ES6", "ES2015"],
+    "TypeScript": ["TS", "Typescript"],
+    "Python": ["Py"],
+    "React": ["React.js", "ReactJS"],
+    "Node.js": ["Node", "NodeJS"],
+    "MongoDB": ["Mongo"],
+    "PostgreSQL": ["Postgres", "PSQL"],
+    "MySQL": ["My SQL"],
+    "AWS": ["Amazon Web Services"],
+    "Azure": ["Microsoft Azure"],
+    "Google Cloud": ["GCP", "Google Cloud Platform"],
+    "Docker": ["Containerization"],
+    "Kubernetes": ["K8s"],
+    "Machine Learning": ["ML"],
+    "Deep Learning": ["DL"],
+    "Natural Language Processing": ["NLP"],
+    "Computer Vision": ["CV"],
+    "Artificial Intelligence": ["AI"],
+    "HTML": ["HTML5"],
+    "CSS": ["CSS3"],
+    "SQL": ["Structured Query Language"],
+    "API": ["REST API", "RESTful API", "GraphQL"]
+  }
+}

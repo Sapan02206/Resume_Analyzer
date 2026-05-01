@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo with Kaggle Dataset - AI Resume Analyzer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="container">
+            <a href="/" class="navbar-brand mb-0 h1">
+                <i class="bi bi-file-earmark-text"></i> AI Resume Analyzer
+            </a>
+            <div>
+                <a href="/" class="btn btn-outline-light btn-sm me-2">
+                    <i class="bi bi-upload"></i> Upload Resume
+                </a>
+                <a href="/demo" class="btn btn-light btn-sm">
+                    <i class="bi bi-database"></i> Demo Mode
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <!-- Info Banner -->
+                <div class="alert alert-info shadow-sm mb-4">
+                    <h5 class="alert-heading">
+                        <i class="bi bi-info-circle"></i> How Demo Mode Works
+                    </h5>
+                    <p class="mb-2">
+                        <strong>Step 1:</strong> Choose where to get the resume from (random or specific job position)<br>
+                        <strong>Step 2:</strong> Select which job role you want to match the resume against<br>
+                        <strong>Result:</strong> See match score, matched skills, and missing skills
+                    </p>
+                    <hr>
+                    <p class="mb-0 small">
+                        <strong>Example:</strong> Pick "Data Scientist" position → Match against "Machine Learning Engineer" role → See how well they align!
+                    </p>
+                </div>
+
+                <div class="card shadow-lg">
+                    <div class="card-body p-5">
+                        <h2 class="card-title text-center mb-4">
+                            <i class="bi bi-database text-success"></i> Test with Kaggle Data
+                        </h2>
+                        <p class="text-center text-muted mb-4">
+                            Analyze real resumes from our Kaggle dataset against job requirements
+                        </p>
+
+                        <form id="demoForm" action="/analyze-kaggle" method="POST">
+                            <!-- Step 1: Choose Resume Source -->
+                            <div class="mb-4">
+                                <label for="position_filter" class="form-label fw-bold">
+                                    <i class="bi bi-1-circle text-primary"></i> Step 1: Choose Resume Source
+                                </label>
+                                <select class="form-select form-select-lg" id="position_filter" name="position_filter">
+                                    <option value="random" selected>🎲 Random Resume (from any position)</option>
+                                    <optgroup label="📋 Or pick a specific position:">
+                                        {% for position in kaggle_positions %}
+                                        <option value="{{ position }}">{{ position }}</option>
+                                        {% endfor %}
+                                    </optgroup>
+                                </select>
+                                <div class="form-text">
+                                    <strong>Random:</strong> System picks any resume from 9,544 resumes<br>
+                                    <strong>Specific Position:</strong> System picks a resume from that job category
+                                </div>
+                            </div>
+
+                            <!-- Step 2: Job Role Selection -->
+                            <div class="mb-4">
+                                <label for="job_role" class="form-label fw-bold">
+                                    <i class="bi bi-2-circle text-success"></i> Step 2: Select Target Job Role to Match Against
+                                </label>
+                                <select class="form-select form-select-lg" id="job_role" name="job_role" required>
+                                    <option value="" selected disabled>Choose the job role to compare with...</option>
+                                    {% for role in job_roles %}
+                                    <option value="{{ role }}">{{ role }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="form-text">
+                                    This is the job you want to check the resume against (e.g., Backend Developer)
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-success btn-lg" id="demoBtn">
+                                    <i class="bi bi-play-circle"></i> <span id="btnText">Analyze Resume</span>
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Loading Spinner -->
+                        <div id="loadingSpinner" class="text-center mt-4" style="display: none;">
+                            <div class="spinner-border text-success" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2 text-muted">Analyzing resume from dataset...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dataset Info Cards -->
+                <div class="row mt-4">
+                    <div class="col-md-4 text-center mb-3">
+                        <div class="card h-100 border-success">
+                            <div class="card-body">
+                                <i class="bi bi-file-earmark-text fs-1 text-success"></i>
+                                <h3 class="mt-2">{{ "{:,}".format(total_resumes) }}</h3>
+                                <p class="text-muted mb-0">Real Resumes</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center mb-3">
+                        <div class="card h-100 border-info">
+                            <div class="card-body">
+                                <i class="bi bi-briefcase fs-1 text-info"></i>
+                                <h3 class="mt-2">{{ kaggle_positions|length }}</h3>
+                                <p class="text-muted mb-0">Job Positions</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center mb-3">
+                        <div class="card h-100 border-primary">
+                            <div class="card-body">
+                                <i class="bi bi-gear fs-1 text-primary"></i>
+                                <h3 class="mt-2">4,000+</h3>
+                                <p class="text-muted mb-0">Unique Skills</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Features -->
+                <div class="card mt-4 bg-light">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="bi bi-star"></i> Why Use Demo Mode?
+                        </h5>
+                        <ul class="mb-0">
+                            <li>Test with real-world resume data from Kaggle</li>
+                            <li>See how the system performs on diverse resumes</li>
+                            <li>No need to upload your own resume</li>
+                            <li>Instant analysis with random or filtered resumes</li>
+                            <li>Perfect for understanding the system capabilities</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center text-muted mt-5 mb-3">
+        <p>&copy; 2026 AI Resume Analyzer. Built with Flask & NLP. Data from Kaggle.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Update button text based on selection
+        document.getElementById('position_filter').addEventListener('change', function() {
+            const btnText = document.getElementById('btnText');
+            if (this.value === 'random') {
+                btnText.textContent = 'Analyze Random Resume';
+            } else {
+                btnText.textContent = 'Analyze ' + this.value + ' Resume';
+            }
+        });
+
+        // Form submission handling
+        document.getElementById('demoForm').addEventListener('submit', function(e) {
+            document.getElementById('loadingSpinner').style.display = 'block';
+            document.getElementById('demoBtn').disabled = true;
+            document.getElementById('demoBtn').innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Analyzing...';
+        });
+
+        // Number formatting filter
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add thousand separators to numbers
+            const numbers = document.querySelectorAll('h3');
+            numbers.forEach(function(num) {
+                const text = num.textContent.trim();
+                if (!isNaN(text.replace(/,/g, ''))) {
+                    num.textContent = parseInt(text.replace(/,/g, '')).toLocaleString();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

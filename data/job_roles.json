@@ -1,0 +1,86 @@
+{
+  "Frontend Developer": {
+    "description": "Builds user interfaces and client-side applications",
+    "required_skills": [
+      "HTML", "CSS", "JavaScript", "React", "Git"
+    ],
+    "optional_skills": [
+      "TypeScript", "Vue.js", "Angular", "Tailwind CSS", "Bootstrap",
+      "Webpack", "Redux", "Next.js", "Testing", "Responsive Design"
+    ],
+    "experience_level": "Entry to Mid-level"
+  },
+  "Backend Developer": {
+    "description": "Develops server-side logic and database management",
+    "required_skills": [
+      "Python", "Node.js", "SQL", "REST API", "Git"
+    ],
+    "optional_skills": [
+      "Django", "Flask", "Express.js", "MongoDB", "PostgreSQL",
+      "Docker", "Redis", "GraphQL", "Microservices", "AWS"
+    ],
+    "experience_level": "Entry to Mid-level"
+  },
+  "Full Stack Developer": {
+    "description": "Works on both frontend and backend development",
+    "required_skills": [
+      "HTML", "CSS", "JavaScript", "React", "Node.js",
+      "SQL", "REST API", "Git"
+    ],
+    "optional_skills": [
+      "TypeScript", "MongoDB", "PostgreSQL", "Docker", "AWS",
+      "Redux", "Express.js", "Testing", "CI/CD", "Agile"
+    ],
+    "experience_level": "Mid to Senior-level"
+  },
+  "Data Scientist": {
+    "description": "Analyzes data and builds predictive models",
+    "required_skills": [
+      "Python", "Machine Learning", "Pandas", "NumPy",
+      "Data Analysis", "SQL"
+    ],
+    "optional_skills": [
+      "TensorFlow", "PyTorch", "Scikit-learn", "Deep Learning",
+      "NLP", "Computer Vision", "R", "Tableau", "Power BI",
+      "Statistical Modeling", "Big Data", "Spark"
+    ],
+    "experience_level": "Mid to Senior-level"
+  },
+  "DevOps Engineer": {
+    "description": "Manages infrastructure and deployment pipelines",
+    "required_skills": [
+      "Linux", "Docker", "Kubernetes", "CI/CD", "Git"
+    ],
+    "optional_skills": [
+      "AWS", "Azure", "Terraform", "Ansible", "Jenkins",
+      "Python", "Bash", "Monitoring", "Prometheus", "Grafana",
+      "Networking", "Security"
+    ],
+    "experience_level": "Mid to Senior-level"
+  },
+  "Mobile Developer": {
+    "description": "Creates mobile applications for iOS and Android",
+    "required_skills": [
+      "React Native", "JavaScript", "Mobile UI/UX", "Git"
+    ],
+    "optional_skills": [
+      "Flutter", "iOS Development", "Android Development", "Swift",
+      "Kotlin", "TypeScript", "Redux", "Firebase", "REST API",
+      "App Store Deployment"
+    ],
+    "experience_level": "Entry to Mid-level"
+  },
+  "Machine Learning Engineer": {
+    "description": "Develops and deploys ML models in production",
+    "required_skills": [
+      "Python", "Machine Learning", "TensorFlow", "PyTorch",
+      "Deep Learning", "Git"
+    ],
+    "optional_skills": [
+      "MLOps", "Docker", "Kubernetes", "AWS", "Model Deployment",
+      "NLP", "Computer Vision", "Scikit-learn", "Data Engineering",
+      "Spark", "Feature Engineering"
+    ],
+    "experience_level": "Mid to Senior-level"
+  }
+}

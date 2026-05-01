@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Results - AI Resume Analyzer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="container">
+            <a href="/" class="navbar-brand mb-0 h1">
+                <i class="bi bi-file-earmark-text"></i> AI Resume Analyzer
+            </a>
+            {% if is_demo %}
+            <span class="badge bg-success">Demo Mode - Kaggle Dataset</span>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container mt-4 mb-5">
+        <!-- Match Score Header -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow-lg mb-4">
+                    <div class="card-body text-center p-4">
+                        <h2 class="mb-3">{{ results.match_results.role_name }}</h2>
+                        <p class="text-muted">{{ results.match_results.role_description }}</p>
+                        
+                        <div class="match-score-circle mx-auto my-4">
+                            <div class="score-value">
+                                {{ results.match_results.match_score }}%
+                            </div>
+                            <div class="score-label">Match Score</div>
+                        </div>
+                        
+                        {% if results.match_results.match_score >= 80 %}
+                        <div class="alert alert-success">
+                            <i class="bi bi-check-circle"></i> Excellent match! You're well-qualified for this role.
+                        </div>
+                        {% elif results.match_results.match_score >= 60 %}
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle"></i> Good foundation! Focus on filling the skill gaps.
+                        </div>
+                        {% elif results.match_results.match_score >= 40 %}
+                        <div class="alert alert-warning">
+                            <i class="bi bi-exclamation-triangle"></i> Moderate match. Significant learning needed.
+                        </div>
+                        {% else %}
+                        <div class="alert alert-danger">
+                            <i class="bi bi-x-circle"></i> Consider entry-level positions while building skills.
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skills Overview -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="bi bi-file-text fs-1 text-primary"></i>
+                        <h3 class="mt-2">{{ results.match_results.total_resume_skills }}</h3>
+                        <p class="text-muted mb-0">Skills Found</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="bi bi-check-circle fs-1 text-success"></i>
+                        <h3 class="mt-2">{{ results.match_results.matched_required|length }}</h3>
+                        <p class="text-muted mb-0">Required Matched</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="bi bi-x-circle fs-1 text-danger"></i>
+                        <h3 class="mt-2">{{ results.match_results.missing_required|length }}</h3>
+                        <p class="text-muted mb-0">Skills Missing</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skill Breakdown -->
+        <div class="row">
+            <!-- Matched Skills -->
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0"><i class="bi bi-check-circle"></i> Matched Skills</h5>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="text-success">Required Skills ({{ results.match_results.matched_required|length }})</h6>
+                        <div class="mb-3">
+                            {% for skill in results.match_results.matched_required %}
+                            <span class="badge bg-success me-1 mb-1">{{ skill|title }}</span>
+                            {% else %}
+                            <p class="text-muted">None matched</p>
+                            {% endfor %}
+                        </div>
+                        
+                        <h6 class="text-info">Optional Skills ({{ results.match_results.matched_optional|length }})</h6>
+                        <div>
+                            {% for skill in results.match_results.matched_optional %}
+                            <span class="badge bg-info me-1 mb-1">{{ skill|title }}</span>
+                            {% else %}
+                            <p class="text-muted">None matched</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Missing Skills -->
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="mb-0"><i class="bi bi-exclamation-triangle"></i> Skill Gaps</h5>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="text-danger">Missing Required Skills ({{ results.match_results.missing_required|length }})</h6>
+                        <div class="mb-3">
+                            {% for skill in results.match_results.missing_required %}
+                            <span class="badge bg-danger me-1 mb-1">{{ skill|title }}</span>
+                            {% else %}
+                            <p class="text-success">All required skills matched! 🎉</p>
+                            {% endfor %}
+                        </div>
+                        
+                        <h6 class="text-warning">Missing Optional Skills ({{ results.match_results.missing_optional|length }})</h6>
+                        <div>
+                            {% for skill in results.match_results.missing_optional[:10] %}
+                            <span class="badge bg-warning text-dark me-1 mb-1">{{ skill|title }}</span>
+                            {% else %}
+                            <p class="text-muted">None</p>
+                            {% endfor %}
+                            {% if results.match_results.missing_optional|length > 10 %}
+                            <p class="text-muted small mt-2">+ {{ results.match_results.missing_optional|length - 10 }} more</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recommendations -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="bi bi-lightbulb"></i> Personalized Recommendations</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Overall Advice -->
+                        <div class="alert alert-info">
+                            <strong>Overall Advice:</strong> {{ results.recommendations.overall_advice }}
+                        </div>
+                        
+                        <div class="alert alert-secondary">
+                            <strong>Estimated Timeline:</strong> {{ results.recommendations.estimated_timeline }}
+                        </div>
+
+                        <!-- Priority Skills -->
+                        <h6 class="mt-4 mb-3">🎯 Priority Learning Path</h6>
+                        <div class="row mb-4">
+                            <div class="col-md-4">
+                                <div class="card border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Critical (Learn First)</h6>
+                                        {% for skill in results.recommendations.priority.critical %}
+                                        <span class="badge bg-danger me-1 mb-1">{{ skill|title }}</span>
+                                        {% else %}
+                                        <p class="text-muted small">None</p>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card border-warning">
+                                    <div class="card-body">
+                                        <h6 class="text-warning">Important</h6>
+                                        {% for skill in results.recommendations.priority.important %}
+                                        <span class="badge bg-warning text-dark me-1 mb-1">{{ skill|title }}</span>
+                                        {% else %}
+                                        <p class="text-muted small">None</p>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card border-info">
+                                    <div class="card-body">
+                                        <h6 class="text-info">Nice to Have</h6>
+                                        {% for skill in results.recommendations.priority.nice_to_have %}
+                                        <span class="badge bg-info me-1 mb-1">{{ skill|title }}</span>
+                                        {% else %}
+                                        <p class="text-muted small">None</p>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Learning Resources -->
+                        {% if results.recommendations.learning_paths %}
+                        <h6 class="mt-4 mb-3">📚 Learning Resources</h6>
+                        <div class="accordion" id="learningAccordion">
+                            {% for path in results.recommendations.learning_paths %}
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" 
+                                            data-bs-toggle="collapse" data-bs-target="#collapse{{ loop.index }}">
+                                        {{ path.skill }} <span class="badge bg-secondary ms-2">{{ path.estimated_time }}</span>
+                                    </button>
+                                </h2>
+                                <div id="collapse{{ loop.index }}" class="accordion-collapse collapse" 
+                                     data-bs-parent="#learningAccordion">
+                                    <div class="accordion-body">
+                                        <p><strong>Action:</strong> {{ path.action }}</p>
+                                        <p><strong>Recommended Platforms:</strong></p>
+                                        <ul>
+                                            {% for platform in path.platforms %}
+                                            <li>{{ platform }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        <!-- Project Ideas -->
+                        {% if results.recommendations.project_ideas %}
+                        <h6 class="mt-4 mb-3">💡 Project Ideas</h6>
+                        <ul class="list-group">
+                            {% for project in results.recommendations.project_ideas %}
+                            <li class="list-group-item">
+                                <i class="bi bi-code-square text-primary"></i> {{ project }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+
+                        <!-- Quick Wins -->
+                        {% if results.recommendations.quick_wins %}
+                        <h6 class="mt-4 mb-3">⚡ Quick Wins</h6>
+                        <div class="row">
+                            {% for win in results.recommendations.quick_wins %}
+                            <div class="col-md-4 mb-2">
+                                <div class="card border-success">
+                                    <div class="card-body">
+                                        <h6 class="text-success">{{ win.skill }}</h6>
+                                        <p class="small mb-1">{{ win.reason }}</p>
+                                        <span class="badge bg-success">{{ win.impact }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                {% if is_demo %}
+                <a href="/demo" class="btn btn-success btn-lg">
+                    <i class="bi bi-arrow-left"></i> Try Another Demo Resume
+                </a>
+                <a href="/" class="btn btn-primary btn-lg">
+                    <i class="bi bi-upload"></i> Upload Your Resume
+                </a>
+                {% else %}
+                <a href="/" class="btn btn-primary btn-lg">
+                    <i class="bi bi-arrow-left"></i> Analyze Another Resume
+                </a>
+                {% endif %}
+                <button onclick="window.print()" class="btn btn-outline-secondary btn-lg">
+                    <i class="bi bi-printer"></i> Print Results
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
